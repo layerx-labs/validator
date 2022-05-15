@@ -1,0 +1,56 @@
+{
+  "name": "@taikai/validator",
+  "version": "1.0.0",
+  "description": "Validator lib to check data-model",
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only lib-tester/index.ts",
+    "dev:js": "node lib-tester/index.js",
+    "typedoc": "typedoc --options ./typedoc.json",
+    "lint": "eslint . --ext ts --ext js --fix",
+    "build": "tsc && tscpaths -p ./tsconfig.json -s ./ -o ./dist",
+    "postbuild": "npm run typedoc && npm pack && node ./scripts/update-lib-tester-pkg-json.js",
+    "test": "jest -u --config=jest.config.js --noStackTrace --detectOpenHandles  --no-cache --passWithNoTests",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "taikai",
+    "validator"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taikai/validator.git"
+  },
+  "author": "Taikai",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/validator": "^13.7.2",
+    "eslint": "^8.15.0",
+    "validator": "^13.7.0",
+    "@types/jest": "^27.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-typescript": "^2.7.0",
+    "eslint-plugin-flowtype": "^8.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "husky": "^7.0.4",
+    "jest": "28.0.3",
+    "lint-staged": "^12.4.0",
+    "ts-jest": "28.0.0",
+    "ts-node-dev": "^1.1.8",
+    "tscpaths": "0.0.9",
+    "tslib": "^2.4.0",
+    "typedoc": "^0.22.15",
+    "typescript": "4.6.4"
+  },
+  "files": [
+    "dist"
+  ]
+}
