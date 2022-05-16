@@ -1,7 +1,8 @@
-import Schema from "../../types/schema";
-import Options from "../../types/options";
-import ValidatorError from "../../types/errors";
 import validator from "validator";
+
+import ValidatorError from "../../types/errors";
+import Options from "../../types/options";
+import Schema from "../../types/schema";
 
 async function validate(ctx: any, schema: Schema, value: any, key: string, errors: ValidatorError, parent?: object) {
     if (schema.type === 'string') {

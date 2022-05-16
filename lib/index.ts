@@ -1,5 +1,5 @@
-import Schema from "../types/schema";
 import Options from "../types/options";
+import Schema from "../types/schema";
 import { validateObj } from "./core/functions";
 
 class Validator {
@@ -17,5 +17,5 @@ class Validator {
 }
 
 export {
-    Validator
+    Validator as default
 };
