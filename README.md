@@ -149,7 +149,7 @@ There is a nested project called **lib-tester** where you can play and see how w
 ```json
 {
     // ...
-    "@taikai/log-service": "file:../taikai-log-service-<VERSION>.tgz"
+    "@taikai/validator": "file:../taikai-validator-<VERSION>.tgz"
     // ...
 }
 ```
