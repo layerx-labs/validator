@@ -1,0 +1,21 @@
+{
+  "name": "lib-tester",
+  "version": "1.0.0",
+  "description": "A simple project to test the library",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only index.ts",
+    "dev:js": "node index.js"
+  },
+  "keywords": [],
+  "author": "Afonso Matumona",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node-dev": "^1.1.8",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "@taikai/validator": "file:../taikai-validator-1.0.0.tgz"
+  }
+}
