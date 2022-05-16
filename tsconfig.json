@@ -24,6 +24,7 @@
       "@types": ["types/"]
     }
   },
+  "include": ["**/*.ts", "**/*.js"],
   "exclude": [
     "node_modules",
     "**/*.test.ts",
@@ -35,6 +36,5 @@
     "lib-tester",
     "docs",
     "scripts"
-  ],
-  "include": ["**/*.ts", "**/*.js"]
+  ]
 }
