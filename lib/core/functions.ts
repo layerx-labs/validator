@@ -1,10 +1,12 @@
 import validator from "validator";
 
+import Context from "../../types/context";
 import ValidatorError from "../../types/errors";
 import Options from "../../types/options";
 import Schema from "../../types/schema";
+import SchemaInput from "../../types/schema-input";
 
-async function validate(ctx: any, schema: Schema, value: any, key: string, errors: ValidatorError, parent?: object) {
+async function validate(ctx: Context, schema: Schema, value: any, key: string, errors: ValidatorError, parent?: object) {
     if (schema.type === 'string') {
         await validateString(ctx, schema, value, key, errors, parent);
     } else if (schema.type === 'array') {
@@ -20,7 +22,7 @@ async function validate(ctx: any, schema: Schema, value: any, key: string, error
     }
 }
 
-async function validateObject(ctx: any, schema: Schema, value: any, key: string, errors: ValidatorError) {
+async function validateObject(ctx: Context, schema: Schema, value: any, key: string, errors: ValidatorError) {
     if (schema.options.presence) {
         if (value == undefined) {
             errors[key] = `${key} is not present`;
@@ -39,7 +41,7 @@ async function validateObject(ctx: any, schema: Schema, value: any, key: string,
     }
 }
 
-async function validateBoolean(ctx: any, schema: Schema, value: any, key: string, errors: ValidatorError, parent?: object) {
+async function validateBoolean(ctx: Context, schema: Schema, value: any, key: string, errors: ValidatorError, parent?: object) {
     if (schema.options.presence) {
         if (value == undefined) {
             errors[key] = `${key} is not present`;
@@ -57,7 +59,7 @@ async function validateBoolean(ctx: any, schema: Schema, value: any, key: string
     }
 }
 
-async function validateString(ctx: any, schema: Schema, value: any, key: string, errors: ValidatorError, parent?: object) {
+async function validateString(ctx: Context, schema: Schema, value: any, key: string, errors: ValidatorError, parent?: object) {
     if (schema.type === 'string') {
         if (schema.options.presence) {
             if (!isString(value)) {
@@ -145,7 +147,7 @@ async function validateString(ctx: any, schema: Schema, value: any, key: string,
     }
 }
 
-async function validateArray(ctx: any, schema: Schema, value: any, key: string, errors: ValidatorError, parent?: object) {
+async function validateArray(ctx: Context, schema: Schema, value: any, key: string, errors: ValidatorError, parent?: object) {
     if (schema.type === 'array') {
         if ((value === undefined || value == null) && !schema.options.presence) {
             return;
@@ -221,12 +223,12 @@ async function validateArray(ctx: any, schema: Schema, value: any, key: string, 
     }
 }
 
-async function validateObj(ctx: any, schema: Schema, value: any, errors: ValidatorError, options?: Options) {
+async function validateObj(ctx: Context, schema: SchemaInput, value: any, errors: ValidatorError, options?: Options) {
     const valueKeys = Object.keys(value);
-    const schemaKeys = Object.keys(schema).filter((key) => (schema as any)[key].options.presence == true);
+    const schemaKeys = Object.keys(schema).filter((key) => schema[key].options.presence == true);
     const keys = new Set(valueKeys.concat(schemaKeys));
     for (const key of keys) {
-        const typedef = (schema as any)[key];
+        const typedef = schema[key];
         if (typedef) {
             await validate(ctx, typedef, value[key], key, errors, value);
         } else if (!options?.unknownKey) {
@@ -235,14 +237,14 @@ async function validateObj(ctx: any, schema: Schema, value: any, errors: Validat
     }
 }
 
-async function isFieldValid(ctx: any, schema: Schema, value: any) {
+async function isFieldValid(ctx: Context, schema: Schema, value: any) {
     const errors: { [key: string]: string } = {};
     const key = 'field';
     await validate(ctx, schema, value, key, errors);
     return !errors[key];
 }
 
-function validateDatetime(__: any, schema: Schema, value: any, key: string, errors: ValidatorError) {
+function validateDatetime(ctx: Context, schema: Schema, value: any, key: string, errors: ValidatorError) {
     if (schema.options.presence) {
         if (!value) {
             errors[key] = `${key} is not present`;
@@ -257,7 +259,7 @@ function validateDatetime(__: any, schema: Schema, value: any, key: string, erro
     }
 }
 
-function validateInteger(__: any, schema: Schema, value: any, key: string, errors: ValidatorError) {
+function validateInteger(ctx: Context, schema: Schema, value: any, key: string, errors: ValidatorError) {
     if (schema.options.presence) {
         if (!value && value !== 0) {
             errors[key] = `${key} is not present`;
