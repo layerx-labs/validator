@@ -122,8 +122,7 @@ await validator.validate({
 validator.errors // { 'name': 'name is not a valid string' }
 ```
 
-# Note:
-When you call the `reset()` method it's clears the errors object.
+    Note: When you call the `reset()` method it's clears the errors object.
 
 ## Contributing
 
