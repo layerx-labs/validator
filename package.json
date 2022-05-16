@@ -1,7 +1,7 @@
 {
   "name": "@taikai/validator",
   "version": "1.0.0",
-  "description": "Validator lib to check data-model",
+  "description": "Validator library to check data-model",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
   "scripts": {
