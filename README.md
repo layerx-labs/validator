@@ -104,7 +104,7 @@ await validator.validate({
     }
 }, {}); // false
 
-validator.errors // { 'username': 'name is not a valid string' }
+console.log(validator.errors); // { 'username': 'name is not a valid string' }
 
 // Reseting...
 validator.reset();
@@ -119,7 +119,7 @@ await validator.validate({
     }
 }, {}); // false
 
-validator.errors // { 'name': 'name is not a valid string' }
+console.log(validator.errors); // { 'name': 'name is not a valid string' }
 ```
 
     Note: When you call the `reset()` method it's clears the errors object.
