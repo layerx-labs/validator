@@ -54,8 +54,9 @@ async function validateBoolean(ctx: Context, schema: Schema, value: any, key: st
         errors[key] = `${key} is not a valid boolean`;
         return;
     }
-    if (schema.options.validateFunc && !(await schema.options.validateFunc(ctx, value, parent))) {
-        errors[key] = `${schema.options.validateFuncErrorMsg}`;
+    const output = { message: `${key} value is not valid` };
+    if (schema.options.custom && !(await schema.options.custom(ctx, value, parent, output))) {
+        errors[key] = `${output.message}`;
     }
 }
 
@@ -134,11 +135,12 @@ async function validateString(ctx: Context, schema: Schema, value: any, key: str
             }
         }
 
+        const output = { message: `${key} value is not valid` };
         if (
-            schema.options.validateFunc &&
-            !(await schema.options.validateFunc(ctx, value, parent))
+            schema.options.custom &&
+            !(await schema.options.custom(ctx, value, parent, output))
         ) {
-            errors[key] = `${schema.options.validateFuncErrorMsg}`;
+            errors[key] = `${output.message}`;
         }
 
         if (schema.options.regexp && !schema.options.regexp.test(value)) {
@@ -163,8 +165,9 @@ async function validateArray(ctx: Context, schema: Schema, value: any, key: stri
             errors[key] = `The ${key} size is greater than ${schema.options.maxSize}`;
         }
 
-        if (schema.options.validateFunc && !(await schema.options.validateFunc(ctx, value))) {
-            errors[key] = `${schema.options.validateFuncErrorMsg}`;
+        const output = { message: `${key} value is not valid` };
+        if (schema.options.custom && !(await schema.options.custom(ctx, value, parent, output))) {
+            errors[key] = `${output.message}`;
         }
 
         if (schema.options.arrayOf) {
