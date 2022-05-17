@@ -1,6 +1,6 @@
 # Validator
 
-A simple validator library to check a data-model from the client, it works with `ts` as well with `js` projects.
+A simple validator library to check data-model from the client, it works with `ts` as well with `js` projects.
 
 ```ts
 import Validator from '@taikai/validator';
