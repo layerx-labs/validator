@@ -313,7 +313,7 @@ function isEmpty(value: string) {
 }
 
 function isBoolean(value: string) {
-    return validator.isEmpty(value);
+    return validator.isBoolean(value);
 }
 
 
