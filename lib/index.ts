@@ -6,7 +6,7 @@ import SchemaFormat from "../types/schema-format";
 import SchemaInput from "../types/schema-input";
 import SchemaOptions from "../types/schema-options";
 import SchemaType from "../types/schema-type";
-import { validateObj } from "./core/functions";
+import * as core from "./core/functions";
 
 class Validator {
     private ctx: Context;
@@ -18,7 +18,7 @@ class Validator {
     }
 
     async validate(schema: SchemaInput, data: object, options?: Options) {
-        await validateObj(this.ctx, schema, data, this.errors, options);
+        await core.validateObj(this.ctx, schema, data, this.errors, options);
         return Object.keys(this.errors).length === 0;
     }
 
@@ -37,4 +37,5 @@ export {
     Options,
     ValidatorError,
     Context,
+    core
 };
