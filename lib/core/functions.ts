@@ -50,7 +50,7 @@ async function validateBoolean(ctx: Context, schema: Schema, value: any, key: st
     } else if (value === undefined) {
         return;
     }
-    if (!validator.isBoolean(`${value}`)) {
+    if (!isBoolean(`${value}`)) {
         errors[key] = `${key} is not a valid boolean`;
         return;
     }
@@ -67,7 +67,7 @@ async function validateString(ctx: Context, schema: Schema, value: any, key: str
                 errors[key] = `${key} is not a valid string`;
                 return;
             }
-            if (validator.isEmpty(value)) {
+            if (isEmpty(value)) {
                 errors[key] = `${key} could not be empty`;
                 return;
             }
@@ -77,7 +77,7 @@ async function validateString(ctx: Context, schema: Schema, value: any, key: str
             } else if (!isString(value)) {
                 errors[key] = `${key} is not a valid string`;
                 return;
-            } else if (validator.isEmpty(value) && !schema.options.min) {
+            } else if (isEmpty(value) && !schema.options.min) {
                 return;
             }
         }
@@ -98,18 +98,18 @@ async function validateString(ctx: Context, schema: Schema, value: any, key: str
         if (schema.options.max && value.length > schema.options.max) {
             errors[key] = `${key} size is greater than ${schema.options.max}`;
         }
-        if (schema.options.format && schema.options.format === 'url' && !validator.isURL(value)) {
+        if (schema.options.format && schema.options.format === 'url' && !isURL(value)) {
             errors[key] = `${key} size is not a valid URL`;
         }
         if (
             schema.options.format &&
             schema.options.format === 'email' &&
-            !validator.isEmail(value)
+            !isEmail(value)
         ) {
             errors[key] = `${key} is not a valid email address`;
         }
 
-        if (schema.options.format && schema.options.format === 'url' && !validator.isURL(value)) {
+        if (schema.options.format && schema.options.format === 'url' && !isURL(value)) {
             errors[key] = `${key} is not a valid url`;
         }
 
@@ -253,7 +253,7 @@ function validateDatetime(ctx: Context, schema: Schema, value: any, key: string,
             errors[key] = `${key} is not present`;
             return;
         }
-    } else if (value === undefined || value === null || validator.isEmpty(value)) {
+    } else if (value === undefined || value === null || isEmpty(value)) {
         return;
     }
     if (!validator.isISO8601(value)) {
@@ -296,6 +296,27 @@ function isInteger(value: any) {
     return validator.isInt(`${value}`);
 }
 
+function isEmail(value: string) {
+    return validator.isEmail(value);
+}
+
+function isDate(value: string) {
+    return validator.isDate(value);
+}
+
+function isURL(value: string) {
+    return validator.isURL(value);
+}
+
+function isEmpty(value: string) {
+    return validator.isEmpty(value);
+}
+
+function isBoolean(value: string) {
+    return validator.isEmpty(value);
+}
+
+
 export {
     isArray,
     isString,
@@ -306,4 +327,9 @@ export {
     validateInteger,
     validateDatetime,
     isFieldValid,
+    isEmail,
+    isURL,
+    isDate,
+    isEmpty,
+    isBoolean
 };
