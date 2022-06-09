@@ -128,7 +128,12 @@ async function validateString(ctx: Context, schema: Schema, value: any, key: str
 
             const orm = ctx.db[schema.options.orm];
             const count = await orm.count({
-                where: { [key]: value, },
+                where: { 
+                    [key]: {
+                        equals: value,
+                        mode: 'insensitive',
+                    }, 
+                },
             });
             if (count > 0) {
                 errors[key] = `${key} is not unique`;
