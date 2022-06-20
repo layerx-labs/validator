@@ -57,6 +57,14 @@ export default interface SchemaOptions {
 	 */
 	maxSize?: number
 	/**
+	 * Allow to define maximum number of a properties of an Object
+	 */
+	maxKeys?: number
+	 /**
+	  * Allow to define minimum number of a properties of an Object 
+	  */
+	minKeys?: number
+	/**
 	 * Allow to apply custom validation
 	 */
 	custom?(
