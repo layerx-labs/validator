@@ -35,6 +35,12 @@ async function validateObject(ctx: Context, schema: Schema, value: any, key: str
         errors[key] = `${key} is not a valid object`;
         return;
     }
+    if (schema.options.minKeys && Object.keys(value).length < schema.options.minKeys) {
+        errors[key] = `Number of keys is less than expected (${schema.options.minKeys})`;
+    }
+    if (schema.options.maxKeys && Object.keys(value).length > schema.options.maxKeys) {
+        errors[key] = `Number of keys is greater than expected (${schema.options.maxKeys})`;
+    }
 
     if (schema.options.schema) {
         await validateObj(ctx, schema.options.schema, value, errors);
